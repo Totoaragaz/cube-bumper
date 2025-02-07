@@ -1,0 +1,94 @@
+[gd_scene load_steps=7 format=3 uid="uid://dhjudsqkm230d"]
+
+[ext_resource type="PackedScene" uid="uid://725vxn8vikrv" path="res://scenes/player.tscn" id="1_7rcjs"]
+[ext_resource type="PackedScene" uid="uid://b3p0jm4jsj02i" path="res://scenes/base_label.tscn" id="2_dp8hi"]
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="2_o8amt"]
+[ext_resource type="PackedScene" uid="uid://c6k45ee06m1km" path="res://scenes/ui.tscn" id="3_nahb8"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_slo2x"]
+size = Vector3(20, 20, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xt4iq"]
+
+[node name="Main" type="Node"]
+
+[node name="Wall" type="StaticBody2D" parent="."]
+position = Vector2(0, 450)
+scale = Vector2(50, 20)
+collision_mask = 0
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Wall"]
+mesh = SubResource("BoxMesh_slo2x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+shape = SubResource("RectangleShape2D_xt4iq")
+
+[node name="Wall4" type="StaticBody2D" parent="."]
+position = Vector2(0, -450)
+scale = Vector2(50, 20)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall4"]
+shape = SubResource("RectangleShape2D_xt4iq")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Wall4/CollisionShape2D"]
+mesh = SubResource("BoxMesh_slo2x")
+
+[node name="Wall2" type="StaticBody2D" parent="."]
+position = Vector2(-450, 0)
+rotation = 1.5708
+scale = Vector2(50, 20)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall2"]
+shape = SubResource("RectangleShape2D_xt4iq")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Wall2/CollisionShape2D"]
+mesh = SubResource("BoxMesh_slo2x")
+
+[node name="Wall3" type="StaticBody2D" parent="."]
+position = Vector2(450, 0)
+rotation = 1.5708
+scale = Vector2(50, 20)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall3"]
+shape = SubResource("RectangleShape2D_xt4iq")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Wall3/CollisionShape2D"]
+mesh = SubResource("BoxMesh_slo2x")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
+
+[node name="UI" parent="Camera2D/CanvasLayer" instance=ExtResource("3_nahb8")]
+base_label = ExtResource("2_dp8hi")
+
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("ui")]
+script = ExtResource("2_o8amt")
+ui = NodePath("../Camera2D/CanvasLayer/UI")
+
+[node name="Player1" parent="GameManager" instance=ExtResource("1_7rcjs")]
+modulate = Color(0, 0, 1, 1)
+position = Vector2(-100, 0)
+
+[node name="EdgeUp" parent="GameManager/Player1/CollisionShape2D" index="1"]
+visible = false
+
+[node name="EdgeDown" parent="GameManager/Player1/CollisionShape2D" index="2"]
+visible = false
+
+[node name="Player2" parent="GameManager" instance=ExtResource("1_7rcjs")]
+modulate = Color(1, 0.588235, 0, 1)
+position = Vector2(100, 0)
+
+[node name="EdgeLeft" parent="GameManager/Player2/CollisionShape2D" index="3"]
+visible = false
+
+[node name="EdgeRight" parent="GameManager/Player2/CollisionShape2D" index="4"]
+visible = false
+
+[editable path="Camera2D/CanvasLayer/UI"]
+[editable path="GameManager/Player1"]
+[editable path="GameManager/Player2"]

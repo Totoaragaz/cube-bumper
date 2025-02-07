@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://b3p0jm4jsj02i"]
+
+[node name="BaseLabel" type="Label"]
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "asdawd"

@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=3 uid="uid://725vxn8vikrv"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_s2ftc"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_y2bc3"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dgr3b"]
+size = Vector2(100, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rr42r"]
+size = Vector3(100, 100, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vkpr8"]
+size = Vector3(4, 100, 1)
+
+[node name="Player" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_y2bc3")
+gravity_scale = 0.0
+can_sleep = false
+lock_rotation = true
+contact_monitor = true
+max_contacts_reported = 50
+linear_damp_mode = 1
+script = ExtResource("1_s2ftc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_dgr3b")
+
+[node name="Square" type="MeshInstance2D" parent="CollisionShape2D"]
+mesh = SubResource("BoxMesh_rr42r")
+
+[node name="EdgeUp" type="MeshInstance2D" parent="CollisionShape2D"]
+unique_name_in_owner = true
+self_modulate = Color(1, 0, 0, 1)
+z_index = 1
+position = Vector2(0, -48)
+rotation = 1.5708
+mesh = SubResource("BoxMesh_vkpr8")
+
+[node name="EdgeDown" type="MeshInstance2D" parent="CollisionShape2D"]
+unique_name_in_owner = true
+self_modulate = Color(1, 0, 0, 1)
+z_index = 1
+position = Vector2(0, 48)
+rotation = 1.5708
+mesh = SubResource("BoxMesh_vkpr8")
+
+[node name="EdgeLeft" type="MeshInstance2D" parent="CollisionShape2D"]
+unique_name_in_owner = true
+self_modulate = Color(1, 0, 0, 1)
+z_index = 1
+position = Vector2(-48, 0)
+mesh = SubResource("BoxMesh_vkpr8")
+
+[node name="EdgeRight" type="MeshInstance2D" parent="CollisionShape2D"]
+unique_name_in_owner = true
+self_modulate = Color(1, 0, 0, 1)
+z_index = 1
+position = Vector2(48, 0)
+mesh = SubResource("BoxMesh_vkpr8")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
